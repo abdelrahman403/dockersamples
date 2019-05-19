@@ -1,0 +1,18 @@
+version: '3'
+services:
+  php:
+    image: redis
+    restart: always
+    container_name: ${PROJECT_NAME}_redis
+    volumes:
+      - /docker/dockerConf/redis/${PROJECT_NAME}/redis.conf:/usr/local/etc/redis/redis.conf
+      - /docker/dockerConf/redis/${PROJECT_NAME}/files:/var/redis/files
+      - /docker/dockerConf/redis/${PROJECT_NAME}/redisdata:/var/redis/redisdata
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - stack_network
+    environment:
+      - TZ=Africa/Cairo
+networks:
+  stack_network:
+    external: true

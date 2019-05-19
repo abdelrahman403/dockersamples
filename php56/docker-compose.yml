@@ -1,0 +1,20 @@
+version: '3'
+services:
+  php:
+    image: bitnami/php-fpm:5.6.38-ol-7-prod
+    restart: always
+    container_name: ${PROJECT_NAME}_phpfpm5
+    volumes:
+      - /home/${PROJECT_NAME}/:/app/${PROJECT_NAME}
+      - /docker/dockerConf/phpfpm/${PROJECT_NAME}/php-fpm.conf:/opt/bitnami/php/etc/php-fpm.conf
+      - /docker/dockerConf/phpfpm/${PROJECT_NAME}/php.ini:/opt/bitnami/php/etc/conf.d/php.ini
+    working_dir: /app/${PROJECT_NAME}/public_html
+    user: ${CURRENT_UID}
+    networks:
+      - stack_network
+    environment:
+      - TZ=Africa/Cairo
+
+networks:
+  stack_network:
+    external: true

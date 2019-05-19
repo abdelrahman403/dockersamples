@@ -1,0 +1,20 @@
+version: '3'
+services:
+  php:
+    image: bitnami/php-fpm:5.6.38-ol-7-prod
+    container_name: projectname_phpfpm
+    volumes:
+      - /home/projectname/:/app/projectname
+    restart: always
+
+  webserver:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /docker/dockerConf/nginx/:/etc/nginx/conf.d
+      - /home:/app
+    container_name: nginx_webserver
+    depends_on:
+      - php
+    restart: always 
